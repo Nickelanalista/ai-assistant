@@ -7,15 +7,16 @@
 }
 
 .chat-window {
-  width: 100%;
-  max-width: 100%;
-  height: calc(100vh - 2rem);
-  max-height: calc(100vh - 2rem);
-  margin: 1rem;
+  width: 95%;
+  max-width: 95%;
+  height: 90vh;
+  max-height: 90vh;
+  margin: 5vh auto;
   border-radius: 1rem;
   overflow: hidden;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .chat-window main {
@@ -48,8 +49,9 @@
 
 @media (min-width: 640px) {
   .chat-window {
-    max-width: 90%;
-    height: 95vh;
-    max-height: 900px;
+    width: 90%;
+    max-width: 800px;
+    height: 85vh;
+    max-height: 800px;
   }
 }
