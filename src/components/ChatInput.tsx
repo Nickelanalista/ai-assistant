@@ -12,6 +12,7 @@ export function ChatInput({ onSendMessage, isLoading, isDark }: ChatInputProps &
   const [message, setMessage] = useState('');
   const [imageData, setImageData] = useState<string[]>([]);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -38,18 +39,33 @@ export function ChatInput({ onSendMessage, isLoading, isDark }: ChatInputProps &
     }
   };
 
+  const handleImageSelect = (data: string) => {
+    setSelectedPreview(selectedPreview === data ? null : data);
+  };
+
   return (
-    <div className={`p-3 sm:p-6 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-100 border-gray-200'} border-t`}>
+    <div className={`p-3 sm:p-6 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-100 border-gray-300'} border-t`}>
       {selectedImages.length > 0 && (
-        <div className="mb-4 p-2 bg-gray-700 rounded-lg flex flex-wrap gap-2">
+        <div className="mb-4 p-2 bg-gray-700 rounded-lg flex overflow-x-auto">
           {imageData.map((data, index) => (
-            <img 
-              key={index}
-              src={data}
-              alt={`Selected ${index}`}
-              className="max-h-32 rounded object-contain"
-            />
+            <div key={index} className="relative mr-2 flex-shrink-0">
+              <img 
+                src={data}
+                alt={`Selected ${index}`}
+                className={`h-16 w-16 object-cover rounded cursor-pointer ${selectedPreview === data ? 'ring-2 ring-blue-500' : ''}`}
+                onClick={() => handleImageSelect(data)}
+              />
+            </div>
           ))}
+        </div>
+      )}
+      {selectedPreview && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setSelectedPreview(null)}>
+          <img 
+            src={selectedPreview}
+            alt="Preview"
+            className="max-w-full max-h-full object-contain"
+          />
         </div>
       )}
       <form onSubmit={handleSubmit} className="flex items-center gap-4">

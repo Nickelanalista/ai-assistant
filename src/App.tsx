@@ -40,7 +40,11 @@ function App() {
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      const scrollOptions: ScrollIntoViewOptions = {
+        behavior: 'smooth',
+        block: 'end',
+      };
+      chatContainerRef.current.lastElementChild?.scrollIntoView(scrollOptions);
     }
   }, [chatState.messages, chatState.isLoading]);
 
@@ -87,8 +91,8 @@ function App() {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center ${isDark ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100'}`}>
-      <div className={`chat-window shadow-2xl flex flex-col ${isDark ? 'bg-gray-800' : 'bg-white bg-opacity-70 backdrop-blur-md'}`}>
+    <div className="min-h-screen flex items-center justify-center bg-transparent">
+      <div className={`chat-window shadow-2xl flex flex-col ${isDark ? 'bg-gray-800 bg-opacity-80' : 'bg-white bg-opacity-70'} backdrop-blur-sm`}>
         <header className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-gray-700' : 'border-blue-200'}`}>
           <div className="flex items-center gap-2">
             <Bot className={`w-8 h-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
