@@ -66,9 +66,9 @@
   .chat-window {
     width: 90%;
     max-width: 900px;
-    height: 90vh;
-    max-height: 800px;
-    margin: 5vh auto;
+    height: 95vh;
+    max-height: 920px;
+    margin: 2.5vh auto;
     border-radius: 1.5rem;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   }
@@ -78,9 +78,9 @@
 @media (max-width: 639px) {
   .chat-window {
     width: 95%;
-    height: 90vh;
-    max-height: 800px;
-    margin: 5vh auto;
+    height: 95vh;
+    max-height: 920px;
+    margin: 2.5vh auto;
     border-radius: 1.5rem;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   }
@@ -96,5 +96,6 @@
   min-height: 100vh;
   background: transparent;
 }
+
 
 
