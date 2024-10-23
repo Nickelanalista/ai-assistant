@@ -1,71 +1,83 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ThemeToggle } from './components/ThemeToggle';
 import { ChatMessage } from './components/ChatMessage';
 import { ChatInput } from './components/ChatInput';
 import { ErrorMessage } from './components/ErrorMessage';
 import { generateAIResponse } from './lib/openai';
-import type { Message, ChatState } from './types';
+import type { Message, ChatState, MessageContent } from './types';
 import { Bot } from 'lucide-react';
+import { LoadingAnimation } from './components/LoadingAnimation';
 
 function App() {
-  const [isDark, setIsDark] = useState(() => 
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  );
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme === null ? true : savedTheme !== 'light';
+  });
   
   const [chatState, setChatState] = useState<ChatState>({
     messages: [{
       role: 'assistant',
       content: [{ 
-        type: 'text', 
-        text: '¡Hola! ¿Cómo puedo ayudarte hoy?' 
+        type: 'text',
+        text: '¡Hola! Soy tu asistente AI. ¿En qué puedo ayudarte hoy?'
       }]
     }],
     isLoading: false,
-    error: null
+    error: null,
   });
+
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
   }, [isDark]);
 
-  const handleSendMessage = async (text: string, imageData?: string) => {
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [chatState.messages, chatState.isLoading]);
+
+  const handleSendMessage = async (text: string, imageData: string[]) => {
     const newMessage: Message = {
       role: 'user',
       content: [
-        ...(imageData ? [{ type: 'image_url', image_url: { url: imageData } }] : []),
-        { type: 'text', text }
+        { type: 'text', text },
+        ...imageData.map(data => ({ type: 'image_url', image_url: { url: data } } as MessageContent))
       ]
     };
 
-    setChatState(prev => ({
-      ...prev,
-      messages: [...prev.messages, newMessage],
+    setChatState(prevState => ({
+      ...prevState,
+      messages: [...prevState.messages, newMessage],
       isLoading: true,
-      error: null
+      error: null,
     }));
 
     try {
-      const aiResponse = await generateAIResponse(
-        chatState.messages.concat(newMessage)
-      );
-
-      setChatState(prev => ({
-        ...prev,
-        messages: [...prev.messages, {
-          role: 'assistant',
-          content: [{ type: 'text', text: aiResponse.content }]
-        }],
-        isLoading: false
+      const aiResponse = await generateAIResponse([...chatState.messages, newMessage]);
+      setChatState(prevState => ({
+        ...prevState,
+        messages: [
+          ...prevState.messages,
+          {
+            role: 'assistant',
+            content: [{ type: 'text', text: aiResponse.content }]
+          }
+        ],
+        isLoading: false,
       }));
     } catch (error) {
-      setChatState(prev => ({
-        ...prev,
+      setChatState(prevState => ({
+        ...prevState,
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Error al comunicarse con la IA'
+        error: error instanceof Error ? error.message : 'An unknown error occurred',
       }));
     }
   };
@@ -75,28 +87,34 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-      <div className="chat-window bg-gray-800 rounded-2xl shadow-2xl flex flex-col">
-        <header className="p-4 border-b border-gray-700 flex items-center justify-between">
+    <div className={`min-h-screen flex items-center justify-center ${isDark ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100'}`}>
+      <div className={`chat-window shadow-2xl flex flex-col ${isDark ? 'bg-gray-800' : 'bg-white bg-opacity-70 backdrop-blur-md'}`}>
+        <header className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-gray-700' : 'border-blue-200'}`}>
           <div className="flex items-center gap-2">
-            <Bot className="w-8 h-8 text-blue-500" />
-            <h1 className="text-xl font-bold text-white">AI Assistant</h1>
+            <Bot className={`w-8 h-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+            <h1 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>AI Assistant</h1>
           </div>
           <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 space-y-6">
+        <main className="flex-1 overflow-y-auto p-4 space-y-6" ref={chatContainerRef}>
           {chatState.messages.map((message, index) => (
             <ChatMessage 
               key={index} 
               message={message} 
               isLatest={index === chatState.messages.length - 1}
+              isLoading={chatState.isLoading && index === chatState.messages.length - 1}
+              isDark={isDark}
             />
           ))}
+          {chatState.isLoading && (
+            <LoadingAnimation isDark={isDark} />
+          )}
           {chatState.error && (
             <ErrorMessage 
               message={chatState.error}
               onDismiss={clearError}
+              isDark={isDark}
             />
           )}
         </main>
@@ -104,10 +122,13 @@ function App() {
         <ChatInput 
           onSendMessage={handleSendMessage}
           isLoading={chatState.isLoading}
+          isDark={isDark}
         />
 
-        <div className="text-center p-2 text-sm text-gray-400 border-t border-gray-700">
-          Desarrollado por <a href="https://twitter.com/CordilleraLabs" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@CordilleraLabs</a>
+        <div className={`text-center p-2 text-sm border-t ${
+          isDark ? 'text-gray-400 border-gray-700' : 'text-gray-600 border-blue-200'
+        }`}>
+          Desarrollado por <a href="https://cordilleralabs.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@CordilleraLabs</a>
         </div>
       </div>
     </div>

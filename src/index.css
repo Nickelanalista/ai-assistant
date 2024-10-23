@@ -8,13 +8,18 @@
 
 .chat-window {
   width: 100%;
-  max-width: 800px;
-  height: 90vh;
-  max-height: 800px;
+  max-width: 100%;
+  height: calc(100vh - 2rem);
+  max-height: calc(100vh - 2rem);
+  margin: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .chat-window main {
-  height: calc(100% - 160px);
+  height: calc(100% - 120px);
   scroll-behavior: smooth;
 }
 
@@ -41,9 +46,10 @@
   color-scheme: dark;
 }
 
-@media (max-width: 640px) {
+@media (min-width: 640px) {
   .chat-window {
-    height: 100vh;
-    max-height: none;
+    max-width: 90%;
+    height: 95vh;
+    max-height: 900px;
   }
 }

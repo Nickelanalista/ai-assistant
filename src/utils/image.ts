@@ -27,3 +27,20 @@ export function validateImage(file: File): boolean {
 
   return true;
 }
+
+export async function processMultipleImages(files: File[]): Promise<string[]> {
+  const validFiles = files.filter(file => {
+    try {
+      return validateImage(file);
+    } catch (error) {
+      console.error(`Error validating file ${file.name}:`, error);
+      return false;
+    }
+  });
+
+  const base64Images = await Promise.all(
+    validFiles.map(file => convertImageToBase64(file))
+  );
+
+  return base64Images;
+}
