@@ -21,9 +21,9 @@
 
 .chat-window {
   width: 95%;
-  height: 90vh;
-  max-height: 90vh;
-  margin: 5vh auto;
+  height: 80vh;
+  max-height: 80vh;
+  margin: 10vh auto;
   border-radius: 1.5rem;
   overflow: hidden;
   backdrop-filter: blur(10px);
@@ -66,11 +66,11 @@
 
 @media (min-width: 640px) {
   .chat-window {
-    width: 80%;
-    max-width: 900px;
-    height: 85vh;
-    max-height: 800px;
-    margin: 7.5vh auto;
+    width: 70%;
+    max-width: 800px;
+    height: 75vh;
+    max-height: 700px;
+    margin: 12.5vh auto;
   }
 }
 
