@@ -78,6 +78,18 @@
   }
 }
 
+/* Estilos para dispositivos móviles */
+@media (max-width: 639px) {
+  .chat-window {
+    width: 95%;
+    height: 90vh;
+    max-height: 800px;
+    margin: 5vh auto;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .animated-bg {
   background: linear-gradient(-45deg, #2155e6, #0fbe93, #237fd5, #0a6cdb);
   background-size: 400% 400%;
