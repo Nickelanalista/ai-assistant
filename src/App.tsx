@@ -45,6 +45,18 @@ function App() {
     };
   }, [chatState.messages, chatState.isLoading]);
 
+  useEffect(() => {
+    const setVH = () => {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    setVH();
+    window.addEventListener('resize', setVH);
+
+    return () => window.removeEventListener('resize', setVH);
+  }, []);
+
   const handleSendMessage = async (text: string, imageData: string[]) => {
     const newMessage: Message = {
       role: 'user',
@@ -91,7 +103,7 @@ function App() {
     <>
       <ViewportMeta />
       <div className="min-h-screen flex items-center justify-center bg-transparent animated-bg p-4">
-        <div className="w-full max-w-3xl h-[90vh] max-h-[800px] flex flex-col overflow-hidden rounded-2xl shadow-2xl">
+        <div className="w-full max-w-3xl h-[90vh] max-h-[calc(var(--vh,1vh)*90)] flex flex-col overflow-hidden rounded-2xl shadow-2xl">
           <div className={`chat-window flex-1 flex flex-col ${isDark ? 'bg-gray-800' : 'bg-white bg-opacity-70 backdrop-blur-md'}`}>
             <header className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-gray-700' : 'border-blue-200'}`}>
               <div className="flex items-center gap-2">
