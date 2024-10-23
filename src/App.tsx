@@ -90,12 +90,12 @@ function App() {
   return (
     <>
       <ViewportMeta />
-      <div className="min-h-screen flex items-center justify-center bg-transparent animated-bg">
-        <div className={`chat-window shadow-2xl flex flex-col ${isDark ? 'bg-gray-800' : 'bg-white bg-opacity-70 backdrop-blur-md'}`}>
-          <header className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-gray-700' : 'border-blue-200'}`}>
+      <div className="min-h-screen flex items-stretch md:items-center justify-center bg-transparent animated-bg">
+        <div className={`chat-window shadow-2xl flex flex-col w-full md:w-auto ${isDark ? 'bg-gray-800' : 'bg-white bg-opacity-70 backdrop-blur-md'}`}>
+          <header className={`p-2 sm:p-4 border-b flex items-center justify-between ${isDark ? 'border-gray-700' : 'border-blue-200'}`}>
             <div className="flex items-center gap-2">
-              <Bot className={`w-8 h-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
-              <h1 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>AI Assistant</h1>
+              <Bot className={`w-6 h-6 sm:w-8 sm:h-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+              <h1 className={`text-lg sm:text-xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>AI Assistant</h1>
             </div>
             <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
           </header>
@@ -128,7 +128,7 @@ function App() {
             isDark={isDark}
           />
 
-          <div className={`text-center p-2 text-sm border-t ${
+          <div className={`text-center p-1 sm:p-2 text-xs sm:text-sm border-t ${
             isDark ? 'text-gray-400 border-gray-700' : 'text-gray-600 border-blue-200'
           }`}>
             Desarrollado por <a href="https://cordilleralabs.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@CordilleraLabs</a>
