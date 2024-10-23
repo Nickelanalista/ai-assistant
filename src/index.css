@@ -64,12 +64,12 @@
 
 @media (min-width: 640px) {
   .chat-window {
-    width: 90%;
-    max-width: 900px;
-    height: 95vh;
-    max-height: 920px;
-    margin: 2.5vh auto;
-    border-radius: 1.5rem;
+    width: 80%;
+    max-width: 700px;
+    height: 80vh;
+    max-height: 700px;
+    margin: 10vh auto;
+    border-radius: 2rem;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   }
 }
@@ -78,9 +78,9 @@
 @media (max-width: 639px) {
   .chat-window {
     width: 95%;
-    height: 95vh;
-    max-height: 920px;
-    margin: 2.5vh auto;
+    height: 90vh;
+    max-height: 700px;
+    margin: 5vh auto;
     border-radius: 1.5rem;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   }
