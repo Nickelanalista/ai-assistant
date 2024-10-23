@@ -22,7 +22,7 @@
 .chat-window {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   overflow: hidden;
 }
@@ -56,10 +56,10 @@
 }
 
 .dark .chat-window {
-  background-color: rgba(26, 26, 46, 0.8);
+  background-color: rgba(26, 26, 46, 0.9);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .chat-window {
     width: 90%;
     max-width: 900px;

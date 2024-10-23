@@ -90,50 +90,53 @@ function App() {
   return (
     <>
       <ViewportMeta />
-      <div className="h-screen flex flex-col bg-transparent animated-bg">
-        <div className={`flex-1 flex flex-col overflow-hidden ${isDark ? 'bg-gray-800' : 'bg-white bg-opacity-70 backdrop-blur-md'}`}>
-          <header className={`p-2 sm:p-4 border-b flex items-center justify-between ${isDark ? 'border-gray-700' : 'border-blue-200'}`}>
-            <div className="flex items-center gap-2">
-              <Bot className={`w-6 h-6 sm:w-8 sm:h-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
-              <h1 className={`text-lg sm:text-xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>AI Assistant</h1>
+      <div className="min-h-screen flex flex-col md:items-center justify-center bg-transparent animated-bg">
+        <div className="h-[90vh] md:h-auto flex items-stretch md:items-center justify-center w-full md:w-auto">
+          <div className={`chat-window shadow-2xl flex flex-col w-full md:w-auto ${isDark ? 'bg-gray-800' : 'bg-white bg-opacity-70 backdrop-blur-md'}`}>
+            <header className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-gray-700' : 'border-blue-200'}`}>
+              <div className="flex items-center gap-2">
+                <Bot className={`w-8 h-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+                <h1 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>AI Assistant</h1>
+              </div>
+              <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
+            </header>
+
+            <main className="flex-1 overflow-y-auto p-4 space-y-6" ref={chatContainerRef}>
+              {chatState.messages.map((message, index) => (
+                <ChatMessage 
+                  key={index} 
+                  message={message} 
+                  isLatest={index === chatState.messages.length - 1}
+                  isLoading={chatState.isLoading && index === chatState.messages.length - 1}
+                  isDark={isDark}
+                />
+              ))}
+              {chatState.isLoading && (
+                <LoadingAnimation isDark={isDark} />
+              )}
+              {chatState.error && (
+                <ErrorMessage 
+                  message={chatState.error}
+                  onDismiss={clearError}
+                  isDark={isDark}
+                />
+              )}
+            </main>
+
+            <ChatInput 
+              onSendMessage={handleSendMessage}
+              isLoading={chatState.isLoading}
+              isDark={isDark}
+            />
+
+            <div className={`text-center p-2 text-sm border-t ${
+              isDark ? 'text-gray-400 border-gray-700' : 'text-gray-600 border-blue-200'
+            }`}>
+              Desarrollado por <a href="https://cordillera.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@CordilleraLabs</a>
             </div>
-            <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
-          </header>
-
-          <main className="flex-1 overflow-y-auto p-4 space-y-6" ref={chatContainerRef}>
-            {chatState.messages.map((message, index) => (
-              <ChatMessage 
-                key={index} 
-                message={message} 
-                isLatest={index === chatState.messages.length - 1}
-                isLoading={chatState.isLoading && index === chatState.messages.length - 1}
-                isDark={isDark}
-              />
-            ))}
-            {chatState.isLoading && (
-              <LoadingAnimation isDark={isDark} />
-            )}
-            {chatState.error && (
-              <ErrorMessage 
-                message={chatState.error}
-                onDismiss={clearError}
-                isDark={isDark}
-              />
-            )}
-          </main>
-
-          <ChatInput 
-            onSendMessage={handleSendMessage}
-            isLoading={chatState.isLoading}
-            isDark={isDark}
-          />
-
-          <div className={`text-center p-1 text-xs border-t ${
-            isDark ? 'text-gray-400 border-gray-700' : 'text-gray-600 border-blue-200'
-          }`}>
-            Desarrollado por <a href="https://cordilleralabs.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">@CordilleraLabs</a>
           </div>
         </div>
+        <div className="h-[10vh] md:hidden"></div>
       </div>
     </>
   );
