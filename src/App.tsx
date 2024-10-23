@@ -91,7 +91,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex items-stretch sm:items-center justify-center bg-transparent">
+    <div className="min-h-screen flex items-center justify-center bg-transparent animated-bg">
       <div className={`chat-window shadow-2xl flex flex-col w-full sm:w-auto ${isDark ? 'bg-gray-800 bg-opacity-80' : 'bg-white bg-opacity-70'} backdrop-blur-sm`}>
         <header className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-gray-700' : 'border-blue-200'}`}>
           <div className="flex items-center gap-2">

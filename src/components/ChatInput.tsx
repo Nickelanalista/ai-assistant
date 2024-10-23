@@ -44,15 +44,15 @@ export function ChatInput({ onSendMessage, isLoading, isDark }: ChatInputProps &
   };
 
   return (
-    <div className={`p-3 sm:p-6 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-100 border-gray-300'} border-t`}>
+    <div className={`p-2 sm:p-4 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-100 border-gray-300'} border-t`}>
       {selectedImages.length > 0 && (
-        <div className="mb-4 p-2 bg-gray-700 rounded-lg flex overflow-x-auto">
+        <div className="mb-2 p-1 bg-gray-700 rounded-lg flex overflow-x-auto">
           {imageData.map((data, index) => (
-            <div key={index} className="relative mr-2 flex-shrink-0">
+            <div key={index} className="relative mr-1 flex-shrink-0">
               <img 
                 src={data}
                 alt={`Selected ${index}`}
-                className={`h-16 w-16 object-cover rounded cursor-pointer ${selectedPreview === data ? 'ring-2 ring-blue-500' : ''}`}
+                className={`h-12 w-12 sm:h-16 sm:w-16 object-cover rounded cursor-pointer ${selectedPreview === data ? 'ring-2 ring-blue-500' : ''}`}
                 onClick={() => handleImageSelect(data)}
               />
             </div>
@@ -68,14 +68,14 @@ export function ChatInput({ onSendMessage, isLoading, isDark }: ChatInputProps &
           />
         </div>
       )}
-      <form onSubmit={handleSubmit} className="flex items-center gap-4">
+      <form onSubmit={handleSubmit} className="flex items-center gap-2">
         <div className="relative">
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="p-2.5 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors"
+            className="p-2 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors"
           >
-            <Image className="w-5 h-5 text-white" />
+            <Image className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </button>
           <input
             type="file"
@@ -91,18 +91,18 @@ export function ChatInput({ onSendMessage, isLoading, isDark }: ChatInputProps &
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Escribe tu mensaje..."
-          className="flex-1 p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400
+          className="flex-1 p-2 sm:p-3 text-sm sm:text-base rounded-lg bg-gray-700 text-white placeholder-gray-400
                    border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500
                    focus:border-transparent"
         />
         <button
           type="submit"
           disabled={isLoading || (!message.trim() && imageData.length === 0)}
-          className="p-2.5 rounded-full bg-blue-500 text-white 
+          className="p-2 sm:p-2.5 rounded-full bg-blue-500 text-white 
                    disabled:opacity-50 disabled:cursor-not-allowed
                    hover:bg-blue-600 transition-colors"
         >
-          <Send className="w-5 h-5" />
+          <Send className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
       </form>
     </div>
