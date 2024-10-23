@@ -90,9 +90,9 @@ function App() {
   return (
     <>
       <ViewportMeta />
-      <div className="min-h-screen flex flex-col md:items-center justify-center bg-transparent animated-bg">
-        <div className="h-[90vh] md:h-auto flex items-stretch md:items-center justify-center w-full md:w-auto">
-          <div className={`chat-window shadow-2xl flex flex-col w-full md:w-auto ${isDark ? 'bg-gray-800' : 'bg-white bg-opacity-70 backdrop-blur-md'}`}>
+      <div className="min-h-screen flex items-center justify-center bg-transparent animated-bg p-4">
+        <div className="w-full max-w-3xl h-[90vh] flex flex-col overflow-hidden rounded-2xl shadow-2xl">
+          <div className={`chat-window flex-1 flex flex-col ${isDark ? 'bg-gray-800' : 'bg-white bg-opacity-70 backdrop-blur-md'}`}>
             <header className={`p-4 border-b flex items-center justify-between ${isDark ? 'border-gray-700' : 'border-blue-200'}`}>
               <div className="flex items-center gap-2">
                 <Bot className={`w-8 h-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
@@ -136,7 +136,6 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="h-[10vh] md:hidden"></div>
       </div>
     </>
   );
