@@ -44,7 +44,7 @@ export function ChatInput({ onSendMessage, isLoading, isDark }: ChatInputProps &
   };
 
   return (
-    <div className={`p-2 sm:p-4 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-100 border-gray-300'} border-t`}>
+    <div className={`p-2 sm:p-4 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-100 border-gray-300'} border-t sticky bottom-0`}>
       {selectedImages.length > 0 && (
         <div className="mb-2 p-1 bg-gray-700 rounded-lg flex overflow-x-auto">
           {imageData.map((data, index) => (
