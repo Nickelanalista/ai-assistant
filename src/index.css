@@ -25,6 +25,11 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
 }
@@ -32,7 +37,6 @@
 .chat-window main {
   flex: 1;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom scrollbar */
@@ -64,22 +68,10 @@
 
 @media (min-width: 640px) {
   .chat-window {
-    width: 80%;
-    max-width: 700px;
-    height: 80vh;
-    max-height: 700px;
-    margin: 10vh auto;
-    border-radius: 2rem;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-  }
-}
-
-/* Estilos para dispositivos móviles */
-@media (max-width: 639px) {
-  .chat-window {
-    width: 95%;
+    width: 90%;
+    max-width: 900px;
     height: 90vh;
-    max-height: 700px;
+    max-height: 800px;
     margin: 5vh auto;
     border-radius: 1.5rem;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
@@ -96,6 +88,4 @@
   min-height: 100vh;
   background: transparent;
 }
-
-
 
